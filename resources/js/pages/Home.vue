@@ -1,11 +1,11 @@
 <script setup>
-import { 
-  Sparkle, 
-  FileText, 
-  PenTool, 
-  Maximize2, 
-  Shield, 
-  ArrowRight 
+import {
+  Sparkle,
+  FileText,
+  PenTool,
+  Maximize2,
+  Shield,
+  ArrowRight
 } from '@lucide/vue';
 import ResumeUploader from '../components/ResumeUploader.vue';
 
@@ -14,7 +14,7 @@ import ResumeUploader from '../components/ResumeUploader.vue';
 <template>
   <section class="pt-32 pb-24 px-4 w-full flex flex-col items-center">
     <div class="w-full max-w-[1280px] mx-auto flex flex-col items-center select-none text-center">
-      
+
       <div class="max-w-3xl mx-auto flex flex-col items-center gap-6 mb-12">
         <span class="inline-flex items-center gap-2 bg-primary/8 text-primary px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
           <Sparkle class="w-3.5 h-3.5 animate-spin" style="animation-duration: 8s" />
@@ -31,9 +31,9 @@ import ResumeUploader from '../components/ResumeUploader.vue';
       <!-- Futuristic Glassmorphic Mockup Showcase Banner -->
       <div class="w-full max-w-4xl mx-auto mb-16 rounded-3xl overflow-hidden glass-card p-2 md:p-3 shadow-lg border border-white/30 group transition-all duration-700 hover:shadow-2xl">
         <div class="rounded-2xl overflow-hidden relative shadow-inner bg-slate-50">
-          <img 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnhf1sDN3du4I1lZ4rpcL4AKaZXxmKLVFn7zCT9bhhoJ2hpTEpEUfN8jO11Q5--NVCU6AmXwqFmvHatlVEWRTOT3M0ZASLIrgM2Dx3l4hn08o41ZqGDcfpuXeE_MrL4t_uIGlolAhi1FJnBU1QC9QkCfyr_sNs0drWBN1Kn_nXbL_RQhOKp2rYP_psQFMPaMCmcArOxHgxr7fiDNha7NTXvoHpQxIUWvSZ0ZPUkXXGFNRJH0-CDKCS5rbL0WTge5Zk8NKd1gOobB11" 
-            alt="Living Portfolio Mockup Screen Display" 
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnhf1sDN3du4I1lZ4rpcL4AKaZXxmKLVFn7zCT9bhhoJ2hpTEpEUfN8jO11Q5--NVCU6AmXwqFmvHatlVEWRTOT3M0ZASLIrgM2Dx3l4hn08o41ZqGDcfpuXeE_MrL4t_uIGlolAhi1FJnBU1QC9QkCfyr_sNs0drWBN1Kn_nXbL_RQhOKp2rYP_psQFMPaMCmcArOxHgxr7fiDNha7NTXvoHpQxIUWvSZ0ZPUkXXGFNRJH0-CDKCS5rbL0WTge5Zk8NKd1gOobB11"
+            alt="Living Portfolio Mockup Screen Display"
             class="w-full h-auto object-cover transform duration-1000 group-hover:scale-[1.02]"
             referrerpolicy="no-referrer"
           />
@@ -96,9 +96,9 @@ import ResumeUploader from '../components/ResumeUploader.vue';
           <!-- Large feature screenshot card -->
           <div class="md:col-span-8 glass-card rounded-3xl overflow-hidden relative group flex flex-col min-h-[400px] md:min-h-0">
             <div class="h-1/2 md:h-full w-full overflow-hidden">
-              <img 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhMgPH6LqXEKZ-fcDwv9mYYgyW2ch88jeBCU6Tij-MPuTvZNsyayU4WWmxgrWKpOuQg5cessSTbTunQ_lDwcukvwFpGol7pyxPY68GFhsyQxmV_1FoHZK0XYNumHsHpI8OR4vNFBqnk1rCZif4Jq6EeyIJzQpfquYElc-9YZjYXaKVEP17hbozGRT0TPSeWpth6oTZXE_FjSlaOOdmzeWHXLhsfn-DeeHOOjwrZYrcGUUDNtWi_sewsko538XVmU0QfjHoVdLCSDOY" 
-                alt="Living Dashboard Mockup Analytical Preview" 
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhMgPH6LqXEKZ-fcDwv9mYYgyW2ch88jeBCU6Tij-MPuTvZNsyayU4WWmxgrWKpOuQg5cessSTbTunQ_lDwcukvwFpGol7pyxPY68GFhsyQxmV_1FoHZK0XYNumHsHpI8OR4vNFBqnk1rCZif4Jq6EeyIJzQpfquYElc-9YZjYXaKVEP17hbozGRT0TPSeWpth6oTZXE_FjSlaOOdmzeWHXLhsfn-DeeHOOjwrZYrcGUUDNtWi_sewsko538XVmU0QfjHoVdLCSDOY"
+                alt="Living Dashboard Mockup Analytical Preview"
                 class="w-full h-full object-cover opacity-90 group-hover:scale-105 duration-1000"
                 referrerpolicy="no-referrer"
               />
@@ -148,8 +148,8 @@ import ResumeUploader from '../components/ResumeUploader.vue';
               Choose from a curated collection of layouts designed by design recruitment agencies at industry leaders. Every pixel is optimized for layout parsing.
             </p>
           </div>
-          <button 
-            @click="emit('alert', 'Accessing recruiters catalog. Ready.', 'info')" 
+          <button
+            @click="emit('alert', 'Accessing recruiters catalog. Ready.', 'info')"
             class="text-primary font-bold text-sm flex items-center gap-2 hover:translate-x-1 duration-200"
           >
             Explore Templates
@@ -166,8 +166,8 @@ import ResumeUploader from '../components/ResumeUploader.vue';
           <p class="text-on-surface-variant text-base max-w-lg font-sans">
             Join 10,000+ top shelf professionals who upgraded their career narrative with interactive showcases.
           </p>
-          <button 
-            @click="emit('navigate', 'register')" 
+          <button
+            @click="emit('navigate', 'register')"
             class="bg-primary hover:bg-primary/95 text-white font-bold text-base px-10 py-4 rounded-full shadow-lg shadow-primary/20 transition-all active:scale-[0.98]"
           >
             Start Your Canvas Now

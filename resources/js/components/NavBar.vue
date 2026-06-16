@@ -1,7 +1,7 @@
 <script setup>
 import { dashboard, index } from '../routes/index';
 import { ref } from 'vue';
-import { Sparkles, Bell, Menu, X, LogOut } from '@lucide/vue';
+import { FileBadge, Menu, X, LogOut } from '@lucide/vue';
 import { Link } from '@inertiajs/vue3'
 
 const mobileMenuOpen = ref(false);
@@ -13,7 +13,7 @@ const mobileMenuOpen = ref(false);
     <Link :href="index()" as="div" class="flex items-center gap-2 cursor-pointer group select-none">
       <span
         class="bg-primary text-white p-1.5 rounded-full flex items-center justify-center shadow-md shadow-primary/20 group-hover:rotate-12 transition-transform duration-300">
-        <Sparkles class="w-5 h-5 text-surface-container-lowest" />
+        <FileBadge class="w-5 h-5 text-surface-container-lowest" />
       </span>
       <span class="font-bold text-lg md:text-xl text-primary tracking-tight font-sans">ResumeCanvas</span>
     </Link>

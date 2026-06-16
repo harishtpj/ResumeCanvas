@@ -1,9 +1,9 @@
 <script setup>
-import { 
-  Activity, 
-  Star, 
-  Plus, 
-  ChevronRight 
+import {
+  Activity,
+  Star,
+  Plus,
+  ChevronRight
 } from '@lucide/vue';
 import DashboardSidebar from '../components/DashboardSidebar.vue';
 import StatCard from '../components/StatCard.vue';
@@ -14,34 +14,29 @@ import PortfolioCard from '../components/PortfolioCard.vue';
 <template>
   <section class="pt-28 pb-20 w-full min-h-screen">
     <div class="max-w-[1280px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-      
+
       <!-- Dashboard Sidebar Component -->
-      <DashboardSidebar 
-        :current-user="currentUser"
-        @alert="(txt, type) => emit('alert', txt, type)"
-        @run-optimizer="() => emit('run-optimizer')"
-        @logout="() => emit('logout')"
-      />
+      <DashboardSidebar />
 
       <!-- Main Dashboard Content Area -->
       <div class="col-span-1 lg:col-span-9 flex flex-col gap-8 text-left">
-        
+
         <header>
           <h2 class="text-3xl font-bold tracking-tight text-on-surface font-sans mb-1">
-            Welcome back, {{ currentUser.name }}
+            Welcome back, Harish
           </h2>
           <p class="text-on-surface-variant text-sm font-sans">
-            Your portfolio views and match rates are looking strong. You have {{ portfolios.length }} active portfolios.
+            Your portfolio views and match rates are looking strong. You have 2 active portfolios.
           </p>
         </header>
 
         <!-- Quick statistical bento boxes -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          
+
           <!-- Views counts box -->
-          <StatCard 
-            title="Portfolio Views" 
-            :value="portfolioViewsCount.toLocaleString()" 
+          <StatCard
+            title="Portfolio Views"
+            value="2"
             trend="+12% views increase this week"
             trend-type="up"
           >
@@ -51,10 +46,10 @@ import PortfolioCard from '../components/PortfolioCard.vue';
           </StatCard>
 
           <!-- AI Profile Score Box -->
-          <StatCard 
-            title="AI Profile Score" 
-            :value="aiScore + '/100'" 
-            :progress-bar="aiScore"
+          <StatCard
+            title="AI Profile Score"
+            value="29/100"
+            :progress-bar="29"
           >
             <template #icon>
               <Star class="w-5 h-5 text-secondary" />
@@ -68,14 +63,12 @@ import PortfolioCard from '../components/PortfolioCard.vue';
               <p class="font-bold text-lg leading-tight font-sans">Ready for a new role?</p>
               <p class="text-xs text-white/80 mt-1 font-sans">Optimize layout match rate for your targets in real-time.</p>
             </div>
-            <button 
-              @click="emit('run-optimizer')"
-              :disabled="isOptimizingScore"
+            <button
               class="bg-white hover:bg-slate-50 active:scale-95 text-primary text-xs font-extrabold px-5 py-2.5 rounded-full transition-all mt-4 w-fit inline-flex items-center gap-1.5 select-none"
             >
-              <span v-if="!isOptimizingScore">Optimize Now</span>
-              <span v-else class="animate-pulse">Analyzing...</span>
-              <ChevronRight v-if="!isOptimizingScore" class="w-3.5 h-3.5" />
+<!--              <span v-if="!isOptimizingScore">Optimize Now</span>-->
+<!--              <span v-else class="animate-pulse">Analyzing...</span>-->
+<!--              <ChevronRight v-if="!isOptimizingScore" class="w-3.5 h-3.5" />-->
             </button>
           </div>
 
@@ -85,16 +78,16 @@ import PortfolioCard from '../components/PortfolioCard.vue';
         <div>
           <div class="flex justify-between items-center mb-6">
             <h3 class="font-bold text-xl text-on-surface font-sans">My Active Portfolios</h3>
-            <span 
-              @click="emit('alert', 'All dynamic portfolio view filters loaded.', 'info')" 
+            <span
+              @click="emit('alert', 'All dynamic portfolio view filters loaded.', 'info')"
               class="text-xs text-primary font-bold hover:underline cursor-pointer"
-            >View All ({{ portfolios.length }})</span>
+            >View All (3)</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            
+
             <!-- Create dynamic template prompt card -->
-            <button 
+            <button
               @click="emit('create-portfolio')"
               class="group flex flex-col items-center justify-center gap-4 bg-slate-50 border-2 border-dashed border-outline-variant/60 hover:border-primary/50 hover:bg-primary/5 transition-all p-6 rounded-3xl min-h-[260px]"
             >
@@ -105,8 +98,8 @@ import PortfolioCard from '../components/PortfolioCard.vue';
             </button>
 
             <!-- PortfolioCard Component rendering -->
-            <PortfolioCard 
-              v-for="item in portfolios" 
+            <PortfolioCard
+              v-for="item in portfolios"
               :key="item.id"
               :item="item"
               @optimize="(id) => emit('optimize-portfolio', id)"
@@ -132,7 +125,7 @@ import PortfolioCard from '../components/PortfolioCard.vue';
               Our neural network parsed your active portfolios profile and detected missing critical performance keywords. Trigger our secure localized synthesizer optimizer to match dynamic job descriptions in seconds.
             </p>
             <div class="flex flex-wrap gap-3 font-sans">
-              <button 
+              <button
                 @click="emit('run-optimizer')"
                 :disabled="isOptimizingScore"
                 class="bg-primary hover:bg-primary/95 text-white text-xs font-bold px-6 py-3 rounded-full shadow-md shadow-primary/15 transition-all active:scale-[0.97]"
@@ -140,8 +133,8 @@ import PortfolioCard from '../components/PortfolioCard.vue';
                 <span v-if="!isOptimizingScore">Launch AI Optimizer</span>
                 <span v-else class="animate-pulse">Optimizing Profile...</span>
               </button>
-              <button 
-                @click="emit('alert', 'Recommendation report hidden. Will show later.', 'info')" 
+              <button
+                @click="emit('alert', 'Recommendation report hidden. Will show later.', 'info')"
                 class="bg-white/70 hover:bg-white border border-outline-variant/30 text-on-surface-variant text-xs font-bold px-6 py-3 rounded-full transition-all"
               >
                 Dismiss for now
