@@ -25,6 +25,6 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
-/resources/js/pages
+/resources/js/actions
 /resources/js/routes
 /resources/js/wayfinder

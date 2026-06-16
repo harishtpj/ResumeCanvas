@@ -8,3 +8,7 @@ Route::get('/', function () {
         'name' => request('name', 'World')
     ]);
 })->name('index');
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');

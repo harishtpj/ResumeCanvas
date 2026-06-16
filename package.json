@@ -17,6 +17,7 @@
     "dependencies": {
         "@inertiajs/vite": "^3.4.0",
         "@inertiajs/vue3": "^3.4.0",
+        "@lucide/vue": "^1.18.0",
         "@vitejs/plugin-vue": "^6.0.7",
         "vue": "^3.5.38"
     }
