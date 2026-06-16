@@ -1,5 +1,5 @@
 <script setup>
-import { dashboard, index } from '../routes/index';
+import { dashboard, index, login, register } from '../routes/index';
 import { ref } from 'vue';
 import { FileBadge, Menu, X, LogOut } from '@lucide/vue';
 import { Link } from '@inertiajs/vue3'
@@ -27,11 +27,11 @@ const mobileMenuOpen = ref(false);
 
     <!-- Action buttons -->
     <div class="hidden md:flex items-center gap-4">
-      <Link v-if="!isLoggedIn" href="/login" as="button"
+      <Link v-if="!isLoggedIn" :href="login()" as="button"
         class="text-on-surface-variant text-sm font-semibold hover:text-primary px-4 py-2 hover:bg-slate-100/50 rounded-full transition-all">
         Sign In
       </Link>
-      <Link v-if="!isLoggedIn" href="/register" as="button"
+      <Link v-if="!isLoggedIn" :href="register()" as="button"
         class="bg-primary text-white text-sm font-bold px-6 py-2.5 rounded-full transition-all active:scale-95 shadow-md shadow-primary/10 hover:bg-primary/95">
         Get Started
       </Link>
@@ -69,10 +69,10 @@ const mobileMenuOpen = ref(false);
       </div>
       <hr class="border-slate-100" />
       <div v-if="!isLoggedIn" class="flex flex-col gap-3 mt-4">
-        <Link href="/login" as="button"
+        <Link :href="login()" as="button"
           class="w-full text-on-surface font-semibold py-3 border border-outline-variant/50 rounded-2xl">Sign
           In</Link>
-        <Link href="/register" as="button"
+        <Link :href="register()" as="button"
           class="w-full bg-primary text-white font-bold py-3 rounded-2xl shadow-lg shadow-primary/10">Get
           Started</Link>
       </div>
