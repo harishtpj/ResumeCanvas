@@ -8,7 +8,15 @@ import {
 import DashboardSidebar from '../components/DashboardSidebar.vue';
 import StatCard from '../components/StatCard.vue';
 import PortfolioCard from '../components/PortfolioCard.vue';
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
+const page = usePage();
+const user = computed(() => {
+  const data = page.props.auth.user;
+  const [f, l] = data.name.split(" ", 1);
+  return {...data, firstName: f, lastName: l};
+})
 </script>
 
 <template>
@@ -23,7 +31,7 @@ import PortfolioCard from '../components/PortfolioCard.vue';
 
         <header>
           <h2 class="text-3xl font-bold tracking-tight text-on-surface font-sans mb-1">
-            Welcome back, Harish
+            Welcome back, {{ user.firstName }}
           </h2>
           <p class="text-on-surface-variant text-sm font-sans">
             Your portfolio views and match rates are looking strong. You have 2 active portfolios.

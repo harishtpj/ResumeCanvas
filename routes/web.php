@@ -19,9 +19,8 @@ Route::get('/', function () {
     ]);
 })->name('index');
 
-Route::get('/login', function () {
-    return Inertia::render('Login');
-})->name('login');
+Route::get('/login', [SessionController::class, "create"])->name('login');
+Route::post('/login', [SessionController::class, "store"]);
 
 Route::get('/register', [RegistrationController::class, "create"])->name('register');
 Route::post('/register', [RegistrationController::class, "store"]);

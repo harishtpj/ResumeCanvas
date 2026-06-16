@@ -89,7 +89,6 @@ import {store} from "@/actions/App/Http/Controllers/Auth/RegistrationController"
                 </div>
             </div>
 
-            <!-- Complete Action CTA -->
             <button
                 class="w-full bg-primary hover:bg-primary/95 text-white font-bold text-sm py-4 rounded-2xl shadow-lg shadow-primary/15 transition-all duration-200 active:scale-[0.98] mt-2 font-sans"
                 type="submit"
