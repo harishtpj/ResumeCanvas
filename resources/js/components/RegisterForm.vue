@@ -1,30 +1,8 @@
 <script setup>
-import {ref} from 'vue';
 import {Lock, Mail, Shield, User} from '@lucide/vue';
-import {Link} from '@inertiajs/vue3';
+import {Form, Link} from '@inertiajs/vue3';
 import {login} from "@/routes/index.ts";
-
-const name = ref('');
-const email = ref('');
-const password = ref('');
-const confirm = ref('');
-const agreeTerms = ref(false);
-
-function handleSubmit() {
-    if (!name.value || !email.value || !password.value) {
-        emit('alert', 'Please fill out all the user registration fields.', 'warning');
-        return;
-    }
-    if (password.value !== confirm.value) {
-        emit('alert', 'Passwords do not match.', 'warning');
-        return;
-    }
-    if (!agreeTerms.value) {
-        emit('alert', 'Please accept the Terms of Service to continue.', 'warning');
-        return;
-    }
-    emit('submit', {name: name.value, email: email.value, password: password.value});
-}
+import {store} from "@/actions/App/Http/Controllers/Auth/RegistrationController";
 </script>
 
 <template>
@@ -35,10 +13,10 @@ function handleSubmit() {
                 clarity.</p>
         </div>
 
-        <form class="space-y-4" @submit.prevent="handleSubmit">
+        <Form :action="store()" class="space-y-4">
             <!-- Full Name -->
             <div class="space-y-1.5 text-left">
-                <label class="text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider" for="reg-name">Full
+                <label class="text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider" for="name">Full
                     Name</label>
                 <div class="relative group">
           <span
@@ -46,10 +24,10 @@ function handleSubmit() {
             <User class="w-5 h-5"/>
           </span>
                     <input
-                        id="reg-name"
-                        v-model="name"
                         class="w-full pl-12 pr-4 py-3.5 bg-surface-container-low border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 focus:bg-white transition-all text-sm outline-none text-on-surface font-sans"
+                        name="name"
                         placeholder="John Doe"
+                        required
                         type="text"
                     />
                 </div>
@@ -57,7 +35,7 @@ function handleSubmit() {
 
             <!-- Email -->
             <div class="space-y-1.5 text-left">
-                <label class="text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider" for="reg-email">Email
+                <label class="text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider" for="email">Email
                     Address</label>
                 <div class="relative group">
           <span
@@ -65,10 +43,10 @@ function handleSubmit() {
             <Mail class="w-5 h-5"/>
           </span>
                     <input
-                        id="reg-email"
-                        v-model="email"
                         class="w-full pl-12 pr-4 py-3.5 bg-surface-container-low border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 focus:bg-white transition-all text-sm outline-none text-on-surface font-sans"
+                        name="email"
                         placeholder="john@example.com"
+                        required
                         type="email"
                     />
                 </div>
@@ -78,16 +56,16 @@ function handleSubmit() {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-sans">
                 <div class="space-y-1.5 text-left">
                     <label class="text-xs font-bold text-on-surface-variant ml-2 uppercase tracking-wider"
-                           for="reg-password">Password</label>
+                           for="password">Password</label>
                     <div class="relative group">
             <span class="absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">
               <Lock class="w-4 h-4"/>
             </span>
                         <input
-                            id="reg-password"
-                            v-model="password"
                             class="w-full pl-10 pr-3 py-3 bg-surface-container-low border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 focus:bg-white transition-all text-sm outline-none text-on-surface font-sans"
+                            name="password"
                             placeholder="••••••••"
+                            required
                             type="password"
                         />
                     </div>
@@ -95,16 +73,16 @@ function handleSubmit() {
 
                 <div class="space-y-1.5 text-left">
                     <label class="text-xs font-bold text-on-surface-variant ml-2 uppercase tracking-wider"
-                           for="reg-confirm">Confirm</label>
+                           for="password_confirmation">Confirm</label>
                     <div class="relative group">
             <span class="absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">
               <Shield class="w-4 h-4"/>
             </span>
                         <input
-                            id="reg-confirm"
-                            v-model="confirm"
                             class="w-full pl-10 pr-3 py-3 bg-surface-container-low border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary/50 focus:bg-white transition-all text-sm outline-none text-on-surface font-sans"
+                            name="password_confirmation"
                             placeholder="••••••••"
+                            required
                             type="password"
                         />
                     </div>
@@ -118,13 +96,14 @@ function handleSubmit() {
             >
                 Create Account
             </button>
-        </form>
+        </Form>
 
         <div class="mt-8 pt-8 border-t border-outline-variant/20 text-center">
             <p class="text-sm text-on-surface-variant font-medium">
                 Already have an account?
                 <Link :href="login()" as="span"
-                      class="text-primary font-bold hover:underline cursor-pointer ml-1 font-sans">Sign In</Link>
+                      class="text-primary font-bold hover:underline cursor-pointer ml-1 font-sans">Sign In
+                </Link>
             </p>
         </div>
     </div>

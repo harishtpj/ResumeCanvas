@@ -1,3 +1,5 @@
+<script setup>
+</script>
 <template>
     <footer
         class="w-full py-8 md:py-10 bg-slate-50 border-t border-slate-100 select-none text-xs text-on-surface-variant mt-auto">
@@ -11,9 +13,13 @@
             </div>
             <div class="flex flex-wrap justify-center gap-6 font-semibold font-sans">
                 <a class="hover:text-primary transition-all cursor-pointer underline"
-                   href="https://github.com/harishtpj/ResumeCanvas">View Project</a>
+                   href="https://github.com/harishtpj/ResumeCanvas"
+                   rel="noopener noreferrer"
+                   target="_blank">View Project</a>
                 <a class="hover:text-primary transition-all cursor-pointer underline font-sans"
-                   href="https://harishtpj.netlify.app">About the developer</a>
+                   href="https://harishtpj.netlify.app"
+                   rel="noopener noreferrer"
+                   target="_blank">About the developer</a>
             </div>
         </div>
     </footer>

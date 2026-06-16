@@ -1,15 +1,7 @@
 <script setup>
-import {
-    LayoutDashboard,
-    FileText,
-    Sliders,
-    Briefcase,
-    Archive,
-    Zap,
-    HelpCircle,
-    LogOut
-} from '@lucide/vue';
+import {Archive, Briefcase, FileText, HelpCircle, LayoutDashboard, LogOut, Sliders, Zap} from '@lucide/vue';
 import {Link} from '@inertiajs/vue3';
+import {logout} from '@/routes/index';
 
 const currentUser = {
     name: 'Harish Kumar',
@@ -38,38 +30,38 @@ const currentUser = {
         <!-- Navigation Menu Items -->
         <nav class="flex-1 flex flex-col gap-1.5 font-sans">
             <Link
-                href="/"
                 as="span"
                 class="flex items-center gap-3 px-4 py-3 bg-primary/8 text-primary rounded-xl font-bold cursor-pointer text-xs transition-colors"
+                href="/"
             >
                 <LayoutDashboard class="w-4.5 h-4.5"/>
                 Overview
             </Link>
             <Link
-                href="/"
                 as="span"
                 class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-on-surface-variant hover:text-primary rounded-xl font-semibold cursor-pointer text-xs transition-all"
+                href="/"
             >
                 <FileText class="w-4.5 h-4.5"/>
                 My Templates
             </Link>
             <span
-                @click="emit('run-optimizer')"
                 class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-on-surface-variant hover:text-primary rounded-xl font-semibold cursor-pointer text-xs transition-all"
+                @click="emit('run-optimizer')"
             >
         <Sliders class="w-4.5 h-4.5 text-primary"/>
         AI Optimizer
       </span>
             <span
-                @click="emit('alert', 'Opening Job Application tracker...', 'info')"
                 class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-on-surface-variant hover:text-primary rounded-xl font-semibold cursor-pointer text-xs transition-all"
+                @click="emit('alert', 'Opening Job Application tracker...', 'info')"
             >
         <Briefcase class="w-4.5 h-4.5"/>
         Job Tracker
       </span>
             <span
-                @click="emit('alert', 'Viewing archived documents list.', 'info')"
                 class="flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-on-surface-variant hover:text-primary rounded-xl font-semibold cursor-pointer text-xs transition-all"
+                @click="emit('alert', 'Viewing archived documents list.', 'info')"
             >
         <Archive class="w-4.5 h-4.5"/>
         Archive
@@ -79,26 +71,25 @@ const currentUser = {
         <!-- Bottom Actions Area -->
         <div class="pt-4 border-t border-slate-100 flex flex-col gap-2 font-sans">
             <button
-                @click="emit('alert', 'Handshake initialized with checkout gateway!', 'success')"
                 class="bg-indigo-50 hover:bg-indigo-100 text-primary py-3 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95"
+                @click="emit('alert', 'Handshake initialized with checkout gateway!', 'success')"
             >
                 <Zap class="w-4 h-4 text-primary animate-pulse"/>
                 Upgrade to AI+
             </button>
             <button
-                @click="emit('alert', 'Redirecting to support desk page.', 'info')"
                 class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant hover:text-primary rounded-xl transition-all cursor-pointer text-xs font-semibold"
+                @click="emit('alert', 'Redirecting to support desk page.', 'info')"
             >
                 <HelpCircle class="w-4.5 h-4.5"/>
                 Help Center
             </button>
-            <button
-                @click="emit('logout')"
-                class="flex items-center gap-3 px-4 py-2.5 text-red-600 hover:bg-red-50 rounded-xl transition-all cursor-pointer text-xs font-bold"
+            <Link :href="logout()" as="button" class="flex items-center gap-3 px-4 py-2.5 text-red-600 hover:bg-red-50 rounded-xl transition-all cursor-pointer text-xs font-bold"
+                  method="delete"
             >
                 <LogOut class="w-4.5 h-4.5 text-red-600"/>
                 Logout
-            </button>
+            </Link>
         </div>
     </aside>
 </template>
