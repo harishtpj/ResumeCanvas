@@ -2,7 +2,7 @@
 import {ref} from 'vue';
 import {ArrowLeft, CheckCircle2, ChevronRight, CloudUpload, FileText, Palette} from '@lucide/vue';
 import {dashboard} from "@/routes/index.ts";
-import {Link, router, useForm} from "@inertiajs/vue3";
+import {Head, Link, router, useForm} from "@inertiajs/vue3";
 import portfolio from "@/routes/portfolio/index.ts";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -121,6 +121,7 @@ function handleConfirm() {
 </script>
 
 <template>
+    <Head title="New Portfolio" />
     <section class="pt-32 pb-24 px-4 w-full flex items-center justify-center min-h-screen">
         <div class="w-full max-w-3xl mx-auto flex flex-col gap-6 text-left">
 

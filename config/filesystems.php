@@ -77,4 +77,7 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    /* Custom Specification for App */
+    'resume_storage' => env('RESUME_STORAGE_FOLDER'),
+
 ];

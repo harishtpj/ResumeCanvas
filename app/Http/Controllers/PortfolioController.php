@@ -28,7 +28,15 @@ class PortfolioController extends Controller
             'kind' => ['required', 'string'],
             'file' => ['required', 'file', 'mimes:pdf,docx', 'max:5120']
         ]);
-        dd($request->all());
+        
+        $path = $request->file('file')->store(config('filesystems.resume_storage'));
+        Auth::user()->portfolios()->create([
+            'title' => $request['title'],
+            'resume_path' => $path,
+            'content' => "<h1>Hello, World</h1>"
+        ]);
+
+        return redirect()->route('dashboard');
     }
 
     public function show(Portfolio $portfolio)
@@ -38,12 +46,13 @@ class PortfolioController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request)
     {
-        //
+        Inertia::flash('toast', [
+            'type' => 'info',
+            'message' => 'Regenerating Portfolio'
+        ]);
+        return back();
     }
 
     public function destroy(Portfolio $portfolio)
@@ -53,6 +62,6 @@ class PortfolioController extends Controller
             'type' => 'success',
             'message' => 'Portfolio has been deleted successfully.'
         ]);
-        return back();
+        return redirect()->route('dashboard');
     }
 }
