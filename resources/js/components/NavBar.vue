@@ -1,8 +1,12 @@
 <script setup>
-import {dashboard, index, login, register} from '../routes/index';
-import {ref} from 'vue';
+import {dashboard, index, login, logout, register} from '@/routes/index';
+import {ref, computed} from 'vue';
 import {FileBadge, LogOut, Menu, X} from '@lucide/vue';
-import {Link} from '@inertiajs/vue3'
+import {Link, usePage} from '@inertiajs/vue3';
+
+const page = usePage();
+const isLoggedIn = computed(() => page.props.auth.loggedIn);
+const user = computed(() => page.props.auth.user);
 
 const mobileMenuOpen = ref(false);
 </script>
@@ -41,12 +45,12 @@ const mobileMenuOpen = ref(false);
                       class="cursor-pointer flex items-center gap-2 border border-outline-variant/30 px-3 py-1.5 rounded-full hover:bg-slate-50 transition-colors">
                     <div
                         class="w-6 h-6 rounded-full bg-secondary text-white font-bold flex items-center justify-center text-[10px] uppercase">
-                        {{ currentUser.name.slice(0, 2) }}
+                        {{ user.initials }}
                     </div>
-                    <span class="text-xs font-semibold max-w-[80px] truncate">{{ currentUser.name }}</span>
+                    <span class="text-xs font-semibold max-w-[80px] truncate">{{ user.name }}</span>
                 </Link>
                 <Link as="button" class="hover:text-red-600 transition-colors hover:bg-red-50 p-2 rounded-full"
-                      href="/logout"
+                      :href="logout()"
                       method="delete" title="Logout">
                     <LogOut class="w-4.5 h-4.5"/>
                 </Link>
@@ -88,15 +92,15 @@ const mobileMenuOpen = ref(false);
                 <div class="p-4 bg-slate-50 rounded-2xl flex items-center gap-3">
                     <div
                         class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">
-                        {{ currentUser.name.slice(0, 2) }}
+                        {{ user.initials }}
                     </div>
                     <div class="text-left">
-                        <p class="font-bold text-sm">{{ currentUser.name }}</p>
-                        <p class="text-xs text-on-surface-variant">{{ currentUser.email }}</p>
+                        <p class="font-bold text-sm">{{ user.name }}</p>
+                        <p class="text-xs text-on-surface-variant">{{ user.email }}</p>
                     </div>
                 </div>
                 <Link as="button" class="w-full text-red-600 font-bold py-3 rounded-2xl border border-red-200 mt-4"
-                      href="/logout"
+                      :href="logout()"
                       method="delete">Sign Out
                 </Link>
             </div>

@@ -1,8 +1,10 @@
 <script setup>
 import LoginForm from '@/components/LoginForm.vue';
+import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
+    <Head title="Log In" />
     <section class="pt-32 pb-24 px-4 w-full flex items-center justify-center">
         <div class="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[500px]">
             <div

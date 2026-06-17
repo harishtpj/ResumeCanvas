@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
 class SessionController extends Controller
@@ -19,16 +18,25 @@ class SessionController extends Controller
     {
         $validated = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string', Password::default()]
+            'password' => ['required', 'string']
         ]);
 
         if (Auth::attempt($validated)) {
             $request->session()->regenerate();
+            Inertia::flash('toast', [
+                'type' => 'success',
+                'text' => "Welcome Back, {$request->user()->name}"
+            ]);
             return redirect()->intended('/dashboard');
         }
+
+        Inertia::flash('toast', [
+            'type' => 'warning',
+            'text' => 'Invalid email or password.'
+        ]);
         
         return back()->withErrors([
-            'email' => 'The provided email and/or password is incorrect.'
+            'auth' => 'The provided email and/or password is incorrect.'
         ]);
     }
 

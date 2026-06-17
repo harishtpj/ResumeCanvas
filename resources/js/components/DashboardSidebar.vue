@@ -5,16 +5,7 @@ import { logout } from '@/routes/index';
 import { computed } from 'vue';
 
 const page = usePage();
-const user = computed(() => {
-    const data = page.props.auth.user;
-    const [f, l] = data.name.split(" ", 2);
-    return {
-        ...data,
-        firstName: f,
-        lastName: l,
-        initials: (f.charAt(0) + (l !== undefined ? l.charAt(0) : f.charAt(1))).toUpperCase()
-    };
-})
+const user = computed(() => page.props.auth.user);
 </script>
 
 <template>

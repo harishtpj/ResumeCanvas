@@ -30,9 +30,12 @@ class RegistrationController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
         Auth::login($user);
 
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'text' => "Account Created Successfully!"
+        ]);
         return redirect()->route('dashboard');
     }
 }
