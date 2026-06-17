@@ -4,12 +4,12 @@ use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\SessionController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\PortfolioController;
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-
+    Route::get('/dashboard', [PortfolioController::class, 'index'])->name('dashboard');
+    Route::resource('portfolio', PortfolioController::class)
+        ->except(['index', 'edit']);
     Route::delete('logout', [SessionController::class, 'destroy'])->name('logout');
 });
 
