@@ -1,6 +1,7 @@
 <script setup>
-import {ref, onMounted, onUnmounted} from 'vue'
+import {onMounted, onUnmounted, ref} from 'vue'
 import {router} from '@inertiajs/vue3'
+import {CheckCircle2, AlertTriangle, XCircle, Info} from "@lucide/vue";
 
 const alerts = ref([])
 
@@ -45,16 +46,28 @@ onUnmounted(() => {
                     'bg-emerald-50/90 text-emerald-900 border-emerald-200': alert.type === 'success',
                     'bg-amber-50/90 text-amber-900 border-amber-200': alert.type === 'warning',
                     'bg-slate-50/90 text-slate-900 border-slate-200': alert.type === 'info',
+                    'bg-red-50/90 text-red-900 border-red-200': alert.type === 'error',
                 }"
                 class="p-4 rounded-xl shadow-lg border text-sm font-medium pointer-events-auto flex items-center gap-3 backdrop-blur-md"
             >
-                <div
-                    :class="{
-                        'bg-emerald-500': alert.type === 'success',
-                        'bg-amber-500': alert.type === 'warning',
-                        'bg-slate-500': alert.type === 'info',
-                    }"
-                    class="w-2 h-2 rounded-full"
+                <CheckCircle2
+                    v-if="alert.type === 'success'"
+                    class="w-5 h-5 text-emerald-500 flex-shrink-0"
+                />
+
+                <AlertTriangle
+                    v-else-if="alert.type === 'warning'"
+                    class="w-5 h-5 text-amber-500 flex-shrink-0"
+                />
+
+                <XCircle
+                    v-else-if="alert.type === 'error'"
+                    class="w-5 h-5 text-red-500 flex-shrink-0"
+                />
+
+                <Info
+                    v-else
+                    class="w-5 h-5 text-slate-500 flex-shrink-0"
                 />
 
                 <span class="flex-1">{{ alert.text }}</span>

@@ -26,7 +26,7 @@ class PortfolioController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'min:4', 'max:255'],
             'kind' => ['required', 'string'],
-            'file' => ['required', 'file']
+            'file' => ['required', 'file', 'mimes:pdf,docx', 'max:5120']
         ]);
         dd($request->all());
     }

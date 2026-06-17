@@ -74,7 +74,7 @@ const showPassword = ref(false);
             </div>
 
             <div class="pt-2 space-y-4">
-                <button class="w-full py-4 bg-primary hover:bg-primary/95 text-white rounded-2xl font-bold text-sm shadow-lg shadow-primary/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-70 Fdisabled:cursor-not-allowed disabled:hover:bg-primary disabled:shadow-none disabled:active:scale-100" type="submit" :disabled="processing">
+                <button class="w-full py-4 bg-primary hover:bg-primary/95 text-white rounded-2xl font-bold text-sm shadow-lg shadow-primary/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:bg-primary disabled:shadow-none disabled:active:scale-100" type="submit" :disabled="processing">
                     <span>{{ processing ? "Signing In..." : "Sign In" }}</span>
                     <ArrowRight class="w-4 h-4" />
                 </button>

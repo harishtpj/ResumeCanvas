@@ -5,6 +5,10 @@ import {dashboard} from "@/routes/index.ts";
 import {Link, router, useForm} from "@inertiajs/vue3";
 import portfolio from "@/routes/portfolio/index.ts";
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const allowedMimeTypes = ['application/pdf', 'application/docx'];
+const allowedExtensions = ['pdf', 'docx'];
+
 const form = useForm({
     title: '',
     kind: 'modern', // 'modern' | 'developer' | 'corporate'
@@ -42,14 +46,34 @@ function triggerFileSelect() {
     fileInput.value?.click();
 }
 
+function validateFile(file) {
+    return allowedMimeTypes.includes(file.type) &&
+        allowedExtensions.includes(file.name.split('.').pop().toLowerCase());
+}
+
 function handleFileChange(e) {
     const file = e.target.files?.[0];
     if (file) {
-        form.file = file;
-        router.flash('toast', {
-            type: 'success',
-            text: `File "${file.name}" loaded successfully.`
-        });
+        if (!validateFile(file)) {
+            router.flash('toast', {
+                type: 'error',
+                text: `File has to be from one of the types: ${allowedExtensions.join(', ')}`
+            })
+            return
+        }
+        if (file.size < MAX_FILE_SIZE) {
+            form.errors.file = null;
+            form.file = file;
+            router.flash('toast', {
+                type: 'success',
+                text: `File "${file.name}" loaded successfully.`
+            });
+        } else {
+            router.flash('toast', {
+                type: 'error',
+                text: "Can't upload file. Size limit exceeded!"
+            });
+        }
     }
 }
 
@@ -67,11 +91,26 @@ function handleDrop(e) {
     isDragging.value = false;
     const file = e.dataTransfer?.files?.[0];
     if (file) {
-        form.file = file;
-        router.flash('toast', {
-            type: 'success',
-            text: `File "${file.name}" loaded successfully.`
-        });
+        if (!validateFile(file)) {
+            router.flash('toast', {
+                type: 'error',
+                text: `File has to be from one of the types: ${allowedExtensions.join(', ')}`
+            })
+            return
+        }
+        if (file.size < MAX_FILE_SIZE) {
+            form.errors.file = null;
+            form.file = file;
+            router.flash('toast', {
+                type: 'success',
+                text: `File "${file.name}" loaded successfully.`
+            });
+        } else {
+            router.flash('toast', {
+                type: 'error',
+                text: "Can't upload file. Size limit exceeded!"
+            });
+        }
     }
 }
 
@@ -113,11 +152,21 @@ function handleConfirm() {
                         <input
                             id="port-title"
                             v-model="form.title"
-                            class="w-full px-5 py-4 bg-surface-container-low border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/25 focus:border-primary/50 focus:bg-white transition-all text-sm outline-none text-on-surface font-sans font-medium"
+                            :class="[
+                                'w-full px-5 py-4 bg-surface-container-low border rounded-2xl transition-all text-sm outline-none text-on-surface font-sans font-medium',
+                                form.errors.title
+                                    ? 'border-red-400 ring-2 ring-red-200 bg-red-50/40'
+                                    : 'border-transparent focus:ring-2 focus:ring-primary/25 focus:border-primary/50 focus:bg-white'
+                            ]"
                             placeholder="e.g. Senior Product Designer, Cloud Architect"
                             required
                             type="text"
                         />
+                        <p v-if="form.errors.title"
+                           class="text-red-600 text-xs font-medium ml-1"
+                        >
+                            {{ form.errors.title }}
+                        </p>
                     </div>
 
                     <!-- Kind Selection Grid (Modern, Developer, Corporate) -->
@@ -165,16 +214,28 @@ function handleConfirm() {
 
                         <div
                             :class="[
-                isDragging ? 'border-primary bg-primary/5 scale-[1.01]' : 'border-outline-variant/60 hover:border-primary hover:bg-slate-50/55',
-                form.file ? 'bg-indigo-50/25 border-indigo-200' : ''
-              ]"
+                                form.errors.file
+                                    ? 'border-red-400 bg-red-50/30'
+                                    : (
+                                        isDragging
+                                            ? 'border-primary bg-primary/5 scale-[1.01]'
+                                            : 'border-outline-variant/60 hover:border-primary hover:bg-slate-50/55'
+                                    ),
+
+                                form.file && !form.errors.file
+                                    ? 'bg-indigo-50/25 border-indigo-200'
+                                    : ''
+                            ]"
                             class="border-2 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300"
                             @click="triggerFileSelect"
                             @dragleave="handleDragLeave"
                             @dragover="handleDragOver"
                             @drop="handleDrop"
                         >
-                            <div class="mb-3 text-primary/70">
+                            <div
+                                :class="form.errors.file ? 'text-red-500' : 'text-primary/70'"
+                                class="mb-3"
+                            >
                                 <CloudUpload class="w-10 h-10 mx-auto"/>
                             </div>
 
@@ -182,7 +243,7 @@ function handleConfirm() {
                                 <h4 class="font-bold text-sm text-on-surface mb-1 font-sans">Click or drag and drop to
                                     upload</h4>
                                 <p class="text-xs text-on-surface-variant font-medium">Supports PDF, DOCX styles up to
-                                    10MB</p>
+                                    5MB</p>
                             </div>
                             <div v-else class="flex flex-col items-center gap-1">
                                 <h4 class="font-extrabold text-sm text-primary flex items-center gap-1 px-4 py-1 bg-white rounded-full border border-primary/20 shadow-sm font-sans">
@@ -203,6 +264,12 @@ function handleConfirm() {
                                 @change="handleFileChange"
                             />
                         </div>
+                        <p
+                            v-if="form.errors.file"
+                            class="text-red-600 text-xs font-medium ml-1"
+                        >
+                            {{ form.errors.file }}
+                        </p>
                     </div>
 
                     <!-- Actions Footer panel -->
@@ -214,11 +281,14 @@ function handleConfirm() {
                             Cancel
                         </Link>
                         <button
-                            class="px-8 py-3 bg-primary hover:bg-primary/95 text-white font-bold text-sm rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98] flex items-center gap-1.5"
+                            :disabled="form.processing"
+                            class="px-8 py-3 bg-primary hover:bg-primary/95 text-white font-bold text-sm rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98] flex items-center gap-1.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:bg-primary disabled:shadow-none disabled:active:scale-100"
                             type="submit"
                             @click="handleConfirm"
                         >
-                            <span>Confirm & Generate Canvas</span>
+                            <span>{{
+                                    form.processing ? "Creating Portfolio..." : "Confirm & Generate Portfolio"
+                                }}</span>
                             <ChevronRight class="w-4 h-4"/>
                         </button>
                     </div>
