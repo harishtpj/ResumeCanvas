@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ai\Agents\PortfolioBuilder;
 use App\Models\Portfolio;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -38,24 +39,28 @@ class PortfolioController extends Controller
             attachments: [$request->file('file')]
         );
 
-        Auth::user()->portfolios()->create([
+        $portfolio = Auth::user()->portfolios()->create([
             'title' => $request['title'],
             'resume_path' => $path,
             'content' => $aiResponse['content'],
         ]);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('portfolio.show', ['portfolio' => $portfolio]);
     }
 
     public function show(Portfolio $portfolio)
     {
+        Gate::authorize('access', $portfolio);
+
         return Inertia::render('Portfolio/Show', [
             'portfolio' => $portfolio
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Portfolio $portfolio)
     {
+        Gate::authorize('access', $portfolio);
+
         Inertia::flash('toast', [
             'type' => 'info',
             'message' => 'Regenerating Portfolio'
@@ -65,11 +70,13 @@ class PortfolioController extends Controller
 
     public function destroy(Portfolio $portfolio)
     {
+        Gate::authorize('access', $portfolio);
+
         $portfolio->delete();
         Inertia::flash('toast', [
             'type' => 'success',
             'message' => 'Portfolio has been deleted successfully.'
         ]);
-        return redirect()->route('dashboard');
+        return redirect()->route('portfolio.index');
     }
 }

@@ -61,9 +61,9 @@ const lastPortfolio = computed(() => props.portfolios[0]);
                     generating one.
                 </p>
             </div>
-            <Link :href="portfolio.show(lastPortfolio.id)" as="button"
+            <Link :href="lastPortfolio ? portfolio.show(lastPortfolio.id) : portfolio.create()" as="button"
                 class="bg-white hover:bg-slate-50 active:scale-95 text-primary text-xs font-extrabold px-5 py-2.5 rounded-full transition-all mt-4 w-fit inline-flex items-center gap-1.5 select-none">
-                View Portfolio
+                {{ lastPortfolio ? "View Portfolio" : "Create one" }}
                 <ChevronRight class="w-3.5 h-3.5" />
             </Link>
         </div>

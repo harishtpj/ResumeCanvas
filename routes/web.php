@@ -7,7 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\PortfolioController;
 use Illuminate\Support\Facades\Auth;
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         $portfolios = Auth::user()->portfolios();
 
