@@ -6,7 +6,7 @@ import {Head, Link, router, useForm} from "@inertiajs/vue3";
 import portfolio from "@/routes/portfolio/index.ts";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const allowedMimeTypes = ['application/pdf', 'application/docx'];
+const allowedMimeTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 const allowedExtensions = ['pdf', 'docx'];
 
 const form = useForm({
@@ -122,7 +122,7 @@ function handleConfirm() {
 
 <template>
     <Head title="New Portfolio" />
-    <section class="pt-32 pb-24 px-4 w-full flex items-center justify-center min-h-screen">
+    <section class="pb-24 px-4 w-full flex items-center justify-center min-h-screen">
         <div class="w-full max-w-3xl mx-auto flex flex-col gap-6 text-left">
 
             <!-- Back Header button -->

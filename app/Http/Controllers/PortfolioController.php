@@ -11,12 +11,8 @@ class PortfolioController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Dashboard', [
-            'portfolios' => Auth::user()->portfolios,
-            'lastPortfolio' => Auth::user()
-                                    ->portfolios()
-                                    ->latest('updated_at')
-                                    ->first(),
+        return Inertia::render('Portfolio/Index', [
+            'portfolios' => Inertia::scroll(fn () => Auth::user()->portfolios()->latest()->paginate(12))
         ]);
     }
 

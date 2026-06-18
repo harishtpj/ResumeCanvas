@@ -5,11 +5,19 @@ use App\Http\Controllers\Auth\SessionController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PortfolioController;
+use Illuminate\Support\Facades\Auth;
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [PortfolioController::class, 'index'])->name('dashboard');
-    Route::resource('portfolio', PortfolioController::class)
-        ->except(['index', 'edit']);
+    Route::get('/dashboard', function () {
+        $portfolios = Auth::user()->portfolios();
+
+        return Inertia::render('Portfolio/Dashboard', [
+            'totalPortfolios' => $portfolios->count(),
+            'portfolios' => $portfolios->latest()->limit(5)->get(),
+        ]);
+    })->name('dashboard');
+
+    Route::resource('portfolio', PortfolioController::class)->except(['edit']);
     Route::delete('logout', [SessionController::class, 'destroy'])->name('logout');
 });
 

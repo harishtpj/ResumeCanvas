@@ -1,7 +1,7 @@
 <script setup>
-import NavBar from './components/NavBar.vue';
-import AlertNotification from './components/AlertNotification.vue';
-import Footer from './components/Footer.vue';
+import NavBar from '@/components/NavBar.vue';
+import AlertNotification from '@/components/AlertNotification.vue';
+import Footer from '@/components/Footer.vue';
 </script>
 
 <template>
