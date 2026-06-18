@@ -25,7 +25,7 @@ const mobileMenuOpen = ref(false);
 
         <!-- Desktop Links -->
         <div class="hidden lg:flex items-center gap-8 font-sans">
-            <Link v-if="isLoggedIn" :class="currentView === 'Dashboard' ? 'text-primary' : 'text-on-surface-variant'"
+            <Link v-if="isLoggedIn" :class="currentView === 'Portfolio/Dashboard' ? 'text-primary' : 'text-on-surface-variant'"
                 :href="dashboard()" as="span"
                 class="cursor-pointer transition-colors text-sm font-semibold hover:text-primary">Dashboard
             </Link>

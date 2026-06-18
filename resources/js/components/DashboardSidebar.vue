@@ -8,7 +8,6 @@ import portfolio from "@/routes/portfolio/index";
 const page = usePage();
 const user = computed(() => page.props.auth.user);
 const currentView = computed(() => page.component);
-console.log(currentView.value);
 
 const getLinkClasses = (viewName) => {
     const activeClasses = 'bg-primary/8 text-primary font-bold';

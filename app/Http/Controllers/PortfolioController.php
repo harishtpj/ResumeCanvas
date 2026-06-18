@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ai\Agents\PortfolioBuilder;
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,9 @@ class PortfolioController extends Controller
     public function index()
     {
         return Inertia::render('Portfolio/Index', [
-            'portfolios' => Inertia::scroll(fn () => Auth::user()->portfolios()->latest()->paginate(12))
+            'portfolios' => Inertia::scroll(
+                fn () => Auth::user()->portfolios()->latest()->paginate(12)
+            ),
         ]);
     }
 
@@ -30,10 +33,15 @@ class PortfolioController extends Controller
         ]);
         
         $path = $request->file('file')->store(config('filesystems.resume_storage'));
+        $aiResponse = (new PortfolioBuilder)->prompt(
+            "Kind: $request->kind", 
+            attachments: [$request->file('file')]
+        );
+
         Auth::user()->portfolios()->create([
             'title' => $request['title'],
             'resume_path' => $path,
-            'content' => "<h1>Hello, World</h1>"
+            'content' => $aiResponse['content'],
         ]);
 
         return redirect()->route('dashboard');

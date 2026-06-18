@@ -71,17 +71,13 @@ function goBack() {
   <section class="pb-20 w-full min-h-screen">
     <div class="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-6">
 
-      <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-5 text-left">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-5 text-left">
         <div class="flex items-center gap-3">
-          <button @click="goBack"
-            class="w-10 h-10 rounded-full border border-outline-variant/40 hover:bg-slate-50 flex items-center justify-center text-on-surface transition-colors cursor-pointer"
-            title="Go back">
+          <button @click="goBack" class="w-10 h-10 rounded-full border border-outline-variant/40 hover:bg-slate-50 flex items-center justify-center text-on-surface transition-colors cursor-pointer" title="Go back">
             <ArrowLeft class="w-5 h-5" />
           </button>
           <div>
-            <span
-              class="inline-flex items-center gap-1 bg-primary/10 text-primary font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded">
+            <span class="inline-flex items-center gap-1 bg-primary/10 text-primary font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded">
               <Sparkle class="w-3 h-3" />
               Preview Template
             </span>
@@ -89,159 +85,85 @@ function goBack() {
           </div>
         </div>
 
-        <!-- Call to actions toolbar -->
         <div class="flex flex-wrap items-center gap-2 font-sans">
-
-          <button
-            class="flex items-center gap-1.5 px-4 py-2.5 bg-primary hover:bg-primary/95 text-white font-bold text-xs rounded-xl shadow-md shadow-primary/15 transition-all select-none"
-            @click="handleDownloadCode">
+          <button class="flex items-center gap-1.5 px-4 py-2.5 bg-primary hover:bg-primary/95 text-white font-bold text-xs rounded-xl shadow-md shadow-primary/15 transition-all select-none" @click="handleDownloadCode">
             <Download class="w-4 h-4" />
             <span>Download HTML Code</span>
           </button>
-
-          <Link :href="pfController.destroy(portfolio.id)" as="button"
-            class="flex items-center gap-1.5 px-4 py-2.5 border border-red-200 hover:bg-red-50 text-red-600 font-bold text-xs rounded-xl transition-all select-none">
+          <Link :href="pfController.destroy(portfolio.id)" as="button" class="flex items-center gap-1.5 px-4 py-2.5 border border-red-200 hover:bg-red-50 text-red-600 font-bold text-xs rounded-xl transition-all select-none">
             <Trash2 class="w-4 h-4" />
             <span>Delete Canvas</span>
           </Link>
-
         </div>
       </div>
 
-      <!-- Main Layout Panels (Split Preview vs Code viewer tabs) -->
       <div class="flex flex-col gap-8 text-left">
-
-        <!-- Left configuration & quick summary panel -->
-        <!-- Portfolio Meta Bar -->
+        
         <div class="glass-card rounded-3xl p-5 border border-outline-variant/30">
           <div class="flex flex-col lg:flex-row lg:items-center gap-5">
-
-            <!-- Status -->
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-                <Sparkle class="w-5 h-5" />
-              </div>
-
+              <div class="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center"><Sparkle class="w-5 h-5" /></div>
               <div>
-                <p class="text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">
-                  Status
-                </p>
-                <p class="font-bold text-sm text-primary">
-                  {{ portfolio.status }}
-                </p>
+                <p class="text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Status</p>
+                <p class="font-bold text-sm text-primary">{{ portfolio.status }}</p>
               </div>
             </div>
-
-            <!-- Divider -->
             <div class="hidden lg:block w-px h-10 bg-outline-variant/20"></div>
-
-            <!-- Last Updated -->
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
-                <Clock3 class="w-5 h-5" />
-              </div>
-
+              <div class="w-10 h-10 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center"><Clock3 class="w-5 h-5" /></div>
               <div>
-                <p class="text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">
-                  Last Updated
-                </p>
-                <p class="font-medium text-sm text-on-surface">
-                  {{ portfolio.last_updated }}
-                </p>
+                <p class="text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Last Updated</p>
+                <p class="font-medium text-sm text-on-surface">{{ portfolio.last_updated }}</p>
               </div>
             </div>
-
-            <!-- Spacer -->
             <div class="flex-1"></div>
-
-            <!-- Preview/Code Switch -->
             <div class="flex bg-slate-100 p-1 rounded-xl">
-              <button :class="currentTab === 'preview'
-                ? 'bg-white shadow-sm text-primary'
-                : 'text-on-surface-variant hover:text-on-surface'"
-                class="px-5 py-2 rounded-lg text-xs font-bold transition-all" @click="currentTab = 'preview'">
-                Live Preview
-              </button>
-
-              <button :class="currentTab === 'code'
-                ? 'bg-white shadow-sm text-primary'
-                : 'text-on-surface-variant hover:text-on-surface'"
-                class="px-5 py-2 rounded-lg text-xs font-bold transition-all" @click="currentTab = 'code'">
-                HTML Source
-              </button>
+              <button :class="currentTab === 'preview' ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-on-surface'" class="px-5 py-2 rounded-lg text-xs font-bold transition-all" @click="currentTab = 'preview'">Live Preview</button>
+              <button :class="currentTab === 'code' ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-on-surface'" class="px-5 py-2 rounded-lg text-xs font-bold transition-all" @click="currentTab = 'code'">HTML Source</button>
             </div>
-
           </div>
         </div>
 
-        <div>
-
-          <div v-show="currentTab === 'preview'" class="flex-1 flex flex-col gap-3 min-h-[500px]">
-            <!-- Viewport toggle header -->
+        <div class="flex-1">
+          
+          <div v-show="currentTab === 'preview'" class="flex flex-col gap-3 h-[600px]">
             <div class="bg-slate-100 p-2 rounded-2xl flex items-center justify-between font-sans">
               <div class="flex items-center gap-1.5 font-bold text-xs text-on-surface-variant pl-3">
                 <SquareMousePointer class="w-4 h-4 text-primary" />
                 <span>Responsive Viewport Simulation</span>
               </div>
               <div class="flex gap-1">
-                <button
-                  :class="previewViewport === 'desktop' ? 'bg-white text-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
-                  class="p-1.5 rounded-lg transition-colors" title="Widescreen Preview"
-                  @click="previewViewport = 'desktop'">
-                  <Monitor class="w-4.5 h-4.5" />
-                </button>
-                <button
-                  :class="previewViewport === 'mobile' ? 'bg-white text-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'"
-                  class="p-1.5 rounded-lg transition-colors" title="Smartphone Preview"
-                  @click="previewViewport = 'mobile'">
-                  <Smartphone class="w-4.5 h-4.5" />
-                </button>
+                <button :class="previewViewport === 'desktop' ? 'bg-white text-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'" class="p-1.5 rounded-lg transition-colors" @click="previewViewport = 'desktop'"><Monitor class="w-4.5 h-4.5" /></button>
+                <button :class="previewViewport === 'mobile' ? 'bg-white text-primary shadow-sm' : 'text-on-surface-variant hover:text-on-surface'" class="p-1.5 rounded-lg transition-colors" @click="previewViewport = 'mobile'"><Smartphone class="w-4.5 h-4.5" /></button>
               </div>
             </div>
 
-            <div
-              class="flex flex-col flex-1 min-h-[500px] bg-slate-50 border border-outline-variant/30 rounded-3xl p-4 overflow-hidden relative">
-
-              <div
-                :class="previewViewport === 'mobile' ? 'max-w-[360px] h-[550px] border-[8px] border-slate-850 rounded-[32px] ring-2 ring-slate-800' : 'w-full h-full'"
-                class="flex-1 transition-all duration-300 relative shadow-md overflow-hidden rounded-xl bg-white mx-auto">
-
-                <iframe :srcdoc="generateTemplateCode" class="w-full h-full border-none" sandbox="allow-scripts">
-                </iframe>
+            <div class="flex-1 w-full bg-slate-50 border border-outline-variant/30 rounded-3xl p-4 overflow-hidden relative">
+              <div :class="previewViewport === 'mobile' ? 'max-w-[360px] h-full border-[8px] border-slate-850 rounded-[32px] ring-2 ring-slate-800' : 'w-full h-full'" 
+                   class="transition-all duration-300 relative shadow-md rounded-xl bg-white mx-auto overflow-hidden">
+                <iframe :srcdoc="generateTemplateCode" class="w-full h-full border-none block" sandbox="allow-scripts"></iframe>
               </div>
             </div>
+          </div>
 
-            <!-- View tab: CODE SOURCE -->
-            <div v-show="currentTab === 'code'" class="flex-1 flex flex-col gap-3">
-              <div
-                class="bg-slate-900 text-slate-300 rounded-3xl overflow-hidden border border-slate-800 flex flex-col">
-                <div class="bg-slate-950 px-5 py-3.5 border-b border-slate-850 flex justify-between items-center">
-                  <div class="flex items-center gap-2 text-xs font-semibold font-sans">
-                    <FileCode class="w-4 h-4 text-primary" />
-                    <span>{{ user.initials + '_' +
-                      portfolio.title.toLowerCase().replace(/\s+/g, '_')
-                    }}_portfolio.html</span>
-                  </div>
-                  <button
-                    class="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white px-3 py-1.5 bg-slate-850 hover:bg-slate-800 rounded-lg transition-all font-sans font-bold"
-                    @click="handleCopyCode">
-                    <Check v-if="isCopied" class="w-3.5 h-3.5 text-emerald-500" />
-                    <Copy v-else class="w-3.5 h-3.5" />
-                    <span>{{ isCopied ? 'Copied!' : 'Copy Code' }}</span>
-                  </button>
+          <div v-show="currentTab === 'code'" class="flex flex-col gap-3">
+            <div class="bg-slate-900 text-slate-300 rounded-3xl overflow-hidden border border-slate-800 flex flex-col">
+              <div class="bg-slate-950 px-5 py-3.5 border-b border-slate-850 flex justify-between items-center">
+                <div class="flex items-center gap-2 text-xs font-semibold font-sans">
+                  <FileCode class="w-4 h-4 text-primary" />
+                  <span>{{ user.initials + '_' + portfolio.title.toLowerCase().replace(/\s+/g, '_') }}_portfolio.html</span>
                 </div>
-
-                <pre
-                  class="p-6 overflow-auto max-h-[520px] text-xs font-mono leading-relaxed text-left select-all bg-slate-900/90 text-indigo-200"><code>{{
-                    generateTemplateCode
-                  }}</code></pre>
+                <button class="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white px-3 py-1.5 bg-slate-850 hover:bg-slate-800 rounded-lg transition-all font-sans font-bold" @click="handleCopyCode">
+                  <Check v-if="isCopied" class="w-3.5 h-3.5 text-emerald-500" />
+                  <Copy v-else class="w-3.5 h-3.5" />
+                  <span>{{ isCopied ? 'Copied!' : 'Copy Code' }}</span>
+                </button>
               </div>
+              <pre class="p-6 overflow-auto max-h-[520px] text-xs font-mono leading-relaxed text-left select-all bg-slate-900/90 text-indigo-200"><code>{{ generateTemplateCode }}</code></pre>
             </div>
-
           </div>
 
         </div>
-
       </div>
     </div>
   </section>
