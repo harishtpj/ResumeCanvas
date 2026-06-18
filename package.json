@@ -19,6 +19,8 @@
         "@inertiajs/vue3": "^3.4.0",
         "@lucide/vue": "^1.18.0",
         "@vitejs/plugin-vue": "^6.0.7",
+        "js-beautify": "^1.15.4",
+        "prismjs": "^1.30.0",
         "vue": "^3.5.38"
     }
 }
