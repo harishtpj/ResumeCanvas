@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Inertia\ExceptionResponse;
@@ -21,10 +20,9 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(UrlGenerator $url): void
+    public function boot(): void
     {
         if (App::environment('production')) {
-            $url->forceHttps();
             Inertia::handleExceptionsUsing(function (ExceptionResponse $resp) {
                 if (in_array($resp->statusCode(), [403, 404, 500, 503])) {
                     return $resp->render('ErrorPage', [
