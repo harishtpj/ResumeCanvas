@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Ai\Agents\PortfolioBuilder;
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Laravel\Ai\Files;
+use Throwable;
 
 class PortfolioController extends Controller
 {
@@ -36,15 +36,30 @@ class PortfolioController extends Controller
         ]);
 
         $path = $request->file('file')->store(config('filesystems.resume_storage'));
-        $aiResponse = (new PortfolioBuilder)->prompt(
-            "Kind: $request->kind",
-            attachments: [$request->file('file')]
-        );
+
+        try {
+            $response = (new PortfolioBuilder)->prompt(
+                "Kind: $request->kind",
+                attachments: [Files\Document::fromStorage($path)]
+            );
+        } catch (Throwable $e) {
+            Inertia::flash('toast', [
+                'type' => 'error',
+                'text' => 'Failed to generate portfolio. Please try again.',
+            ]);
+
+            return redirect()->route('dashboard');
+        }
 
         $portfolio = Auth::user()->portfolios()->create([
-            'title' => $request['title'],
+            'title' => $request->title,
             'resume_path' => $path,
-            'content' => $aiResponse['content'],
+            'content' => $response['content'],
+        ]);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'text' => 'Portfolio Created Successfully!',
         ]);
 
         return redirect()->route('portfolio.show', ['portfolio' => $portfolio]);
@@ -63,20 +78,23 @@ class PortfolioController extends Controller
     {
         Gate::authorize('access', $portfolio);
 
-        $path = Storage::disk('local')
-            ->path($portfolio->resume_path);
+        $resume = Files\Document::fromStorage($portfolio->resume_path);
+        try {
+            $response = PortfolioBuilder::make(action: 'update')
+                ->prompt(
+                    "Generated Previous HTML: $request->content",
+                    attachments: [$resume]
+                );
+        } catch (Throwable $e) {
+            Inertia::flash('toast', [
+                'type' => 'error',
+                'text' => 'Failed to generate portfolio. Please try again.',
+            ]);
 
-        $resume = new UploadedFile(
-            $path, 
-            basename($path), 
-            mimeType: 'application/pdf',
-            test: true
-        );
-        $aiResponse = (new PortfolioBuilder(action: 'update'))->prompt(
-            "Generated Previous HTML: $request->content",
-            attachments: [$resume]
-        );
-        $portfolio->update(['content' => $aiResponse['content']]);
+            return redirect()->route('dashboard');
+        }
+
+        $portfolio->update(['content' => $response['content']]);
 
         Inertia::flash('toast', [
             'type' => 'success',

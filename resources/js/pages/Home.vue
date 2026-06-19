@@ -34,12 +34,11 @@ import { register } from '@/routes/index';
         </p>
       </div>
 
-      <!-- Futuristic Glassmorphic Mockup Showcase Banner -->
       <div
         class="w-full max-w-4xl mx-auto mb-16 rounded-3xl overflow-hidden glass-card p-2 md:p-3 shadow-lg border border-white/30 group transition-all duration-700 hover:shadow-2xl">
         <div class="rounded-2xl overflow-hidden relative shadow-inner bg-slate-50">
           <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnhf1sDN3du4I1lZ4rpcL4AKaZXxmKLVFn7zCT9bhhoJ2hpTEpEUfN8jO11Q5--NVCU6AmXwqFmvHatlVEWRTOT3M0ZASLIrgM2Dx3l4hn08o41ZqGDcfpuXeE_MrL4t_uIGlolAhi1FJnBU1QC9QkCfyr_sNs0drWBN1Kn_nXbL_RQhOKp2rYP_psQFMPaMCmcArOxHgxr7fiDNha7NTXvoHpQxIUWvSZ0ZPUkXXGFNRJH0-CDKCS5rbL0WTge5Zk8NKd1gOobB11"
+            src="@/../images/banner.png"
             alt="Living Portfolio Mockup Screen Display"
             class="w-full h-auto object-cover transform duration-1000 group-hover:scale-[1.02]"
             referrerpolicy="no-referrer" />

@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { ArrowLeft } from '@lucide/vue';
-import { InfiniteScroll, Link } from "@inertiajs/vue3";
+import { Head, InfiniteScroll, Link } from "@inertiajs/vue3";
 import { dashboard } from "@/routes/index";
 import PortfolioCard from "@/components/PortfolioCard.vue";
 
@@ -14,6 +14,7 @@ defineProps({
 </script>
 
 <template>
+  <Head title="Portfolios" />
   <section class="pb-20 w-full min-h-screen">
     <div class="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-6">
 

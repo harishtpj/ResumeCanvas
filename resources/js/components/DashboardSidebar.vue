@@ -23,7 +23,6 @@ const getLinkClasses = (viewName) => {
 <template>
     <aside
         class="hidden lg:flex lg:col-span-3 flex-col sticky top-28 bg-surface-container-lowest border border-outline-variant/30 p-5 gap-2 rounded-3xl h-[calc(100vh-140px)] shadow-[0_10px_30px_rgba(0,0,0,0.01)]">
-        <!-- User Profile Badge -->
         <div class="p-3 mb-4 bg-slate-50/55 border border-slate-100/50 rounded-2xl">
             <div class="flex items-center gap-3">
                 <div
@@ -37,7 +36,6 @@ const getLinkClasses = (viewName) => {
             </div>
         </div>
 
-        <!-- Navigation Menu Items -->
         <nav class="flex-1 flex flex-col gap-1.5 font-sans">
             <Link as="span" :class="getLinkClasses('Portfolio/Dashboard')" :href="dashboard()">
                 <LayoutDashboard class="w-4.5 h-4.5" />
@@ -50,7 +48,6 @@ const getLinkClasses = (viewName) => {
             </Link>
         </nav>
 
-        <!-- Bottom Actions Area -->
         <div class="pt-4 border-t border-slate-100 flex flex-col gap-2 font-sans">
             <Link :href="logout()" as="button"
                 class="flex items-center gap-3 px-4 py-2.5 text-red-600 hover:bg-red-50 rounded-xl transition-all cursor-pointer text-xs font-bold">

@@ -17,9 +17,10 @@ import {
   Sparkle,
   SquareMousePointer,
   Trash2,
-  Clock3
+  Clock3,
+  RotateCw
 } from '@lucide/vue';
-import { Link, router, usePage } from "@inertiajs/vue3";
+import { Head, Link, router, usePage } from "@inertiajs/vue3";
 import pfController from "@/routes/portfolio/index";
 import { dashboard } from "@/routes/index";
 
@@ -76,25 +77,21 @@ function handleDownloadCode() {
     text: 'Portfolio HTML template downloaded successfully!'
   });
 }
-
-function goBack() {
-  history.back();
-  return false;
-}
 </script>
 
 <template>
+  <Head :title="portfolio.title" />
   <section class="pb-20 w-full min-h-screen">
     <div class="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-6">
 
       <div
         class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-5 text-left">
         <div class="flex items-center gap-3">
-          <button @click="goBack"
+          <Link :href="pfController.index()" as="button"
             class="w-10 h-10 rounded-full border border-outline-variant/40 hover:bg-slate-50 flex items-center justify-center text-on-surface transition-colors cursor-pointer"
             title="Go back">
             <ArrowLeft class="w-5 h-5" />
-          </button>
+          </Link>
           <div>
             <span
               class="inline-flex items-center gap-1 bg-primary/10 text-primary font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 rounded">
@@ -112,6 +109,11 @@ function goBack() {
             <Download class="w-4 h-4" />
             <span>Download HTML Code</span>
           </button>
+          <Link :href="pfController.update(portfolio.id)" as="button"
+            class="flex items-center gap-1.5 px-4 py-2.5 border border-blue-200 hover:bg-blue-50 text-blue-600 font-bold text-xs rounded-xl transition-all select-none">
+            <RotateCw class="w-4 h-4" />
+            <span>Regenerate Portfolio</span>
+          </Link>
           <Link :href="pfController.destroy(portfolio.id)" as="button"
             class="flex items-center gap-1.5 px-4 py-2.5 border border-red-200 hover:bg-red-50 text-red-600 font-bold text-xs rounded-xl transition-all select-none">
             <Trash2 class="w-4 h-4" />
@@ -124,15 +126,6 @@ function goBack() {
 
         <div class="glass-card rounded-3xl p-5 border border-outline-variant/30">
           <div class="flex flex-col lg:flex-row lg:items-center gap-5">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-                <Sparkle class="w-5 h-5" />
-              </div>
-              <div>
-                <p class="text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Status</p>
-                <p class="font-bold text-sm text-primary">{{ portfolio.status }}</p>
-              </div>
-            </div>
             <div class="hidden lg:block w-px h-10 bg-outline-variant/20"></div>
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">

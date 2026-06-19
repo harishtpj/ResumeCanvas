@@ -30,6 +30,9 @@ const lastPortfolio = computed(() => props.portfolios[0]);
         <h2 class="text-3xl font-bold tracking-tight text-on-surface font-sans mb-1">
             Welcome, {{ user.firstName }}
         </h2>
+        <p class="text-on-surface-variant text-sm font-sans">
+            Leverage the power of AI to craft a portfolio that highlights your best work.
+        </p>
     </header>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

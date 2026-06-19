@@ -30,7 +30,5 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::get('/', function () {
-    return Inertia::render('Home', [
-        'name' => request('name', 'World')
-    ]);
+    return Inertia::render('Home');
 })->name('index');
