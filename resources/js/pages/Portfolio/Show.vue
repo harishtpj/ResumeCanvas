@@ -18,11 +18,17 @@ import {
   SquareMousePointer,
   Trash2,
   Clock3,
-  RotateCw
+  RotateCw,
+  Share2,
+  Link2,
+  Unlink,
+  SquareArrowOutUpRight,
+  ChevronDown,
+  ChevronLeft
 } from '@lucide/vue';
 import { Head, Link, router, usePage } from "@inertiajs/vue3";
 import pfController from "@/routes/portfolio/index";
-import { dashboard } from "@/routes/index";
+import { dashboard, view } from "@/routes/index";
 
 const page = usePage();
 const props = defineProps({
@@ -35,6 +41,7 @@ const props = defineProps({
 const currentTab = ref('preview'); // 'preview' | 'code'
 const previewViewport = ref('desktop'); // 'desktop' | 'mobile'
 const isCopied = ref(false);
+const showSharing = ref(false);
 
 const user = computed(() => page.props.auth.user);
 const generateTemplateCode = computed(() => props.portfolio.content);
@@ -77,9 +84,32 @@ function handleDownloadCode() {
     text: 'Portfolio HTML template downloaded successfully!'
   });
 }
+
+function maketoggleSharingReq() {
+  router.patch(pfController.share(props.portfolio.id), {}, { async: true });
+}
+
+function toggleSharing() {
+  if (!props.portfolio.shared)
+    maketoggleSharingReq()
+  showSharing.value = !showSharing.value;
+}
+
+function getSharedURL() {
+  return window.location.origin + view(props.portfolio.id).url;
+}
+
+function copyShareLink() {
+  navigator.clipboard.writeText(getSharedURL());
+  router.flash('toast', {
+    type: 'success',
+    text: 'Public share link copied to clipboard!'
+  });
+}
 </script>
 
 <template>
+
   <Head :title="portfolio.title" />
   <section class="pb-20 w-full min-h-screen">
     <div class="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-6">
@@ -126,7 +156,7 @@ function handleDownloadCode() {
 
         <div class="glass-card rounded-3xl p-5 border border-outline-variant/30">
           <div class="flex flex-col lg:flex-row lg:items-center gap-5">
-            <div class="hidden lg:block w-px h-10 bg-outline-variant/20"></div>
+
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
                 <Clock3 class="w-5 h-5" />
@@ -136,16 +166,48 @@ function handleDownloadCode() {
                 <p class="font-medium text-sm text-on-surface">{{ portfolio.last_updated }}</p>
               </div>
             </div>
+
             <div class="flex-1"></div>
-            <div class="flex bg-slate-100 p-1 rounded-xl">
-              <button
-                :class="currentTab === 'preview' ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-on-surface'"
-                class="px-5 py-2 rounded-lg text-xs font-bold transition-all" @click="currentTab = 'preview'">Live
-                Preview</button>
-              <button
-                :class="currentTab === 'code' ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-on-surface'"
-                class="px-5 py-2 rounded-lg text-xs font-bold transition-all" @click="currentTab = 'code'">HTML
-                Source</button>
+
+            <div class="flex items-center gap-2">
+
+              <div class="relative">
+                <button @click="toggleSharing"
+                  class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border border-slate-200 hover:bg-slate-50 text-on-surface-variant">
+                  <Share2 class="w-4 h-4" />
+                  {{ !portfolio.shared ? "Enable Sharing" : "Sharing Options" }}
+                  <ChevronDown v-if="portfolio.shared" class="w-4 h-4 transition-transform duration-300 ease-in-out"
+                    :class="{ 'rotate-180': showSharing }" />
+                </button>
+
+                <div v-if="portfolio.shared && showSharing"
+                  class="absolute top-full right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 z-10 animate-in fade-in zoom-in duration-200">
+                  <button @click="copyShareLink"
+                    class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium hover:bg-slate-50 rounded-lg text-on-surface">
+                    <Link2 class="w-4 h-4" /> Copy Link
+                  </button>
+                  <a :href="getSharedURL()" target="_blank"
+                    class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium hover:bg-slate-50 rounded-lg text-on-surface">
+                    <SquareArrowOutUpRight class="w-4 h-4" /> View Public Site
+                  </a>
+                  <button @click="maketoggleSharingReq"
+                    class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium hover:bg-slate-50 rounded-lg text-on-surface">
+                    <Unlink class="w-4 h-4" /> Disable Sharing
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex bg-slate-100 p-1 rounded-xl">
+                <button
+                  :class="currentTab === 'preview' ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-on-surface'"
+                  class="px-5 py-2 rounded-lg text-xs font-bold transition-all" @click="currentTab = 'preview'">Live
+                  Preview</button>
+                <button
+                  :class="currentTab === 'code' ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-on-surface'"
+                  class="px-5 py-2 rounded-lg text-xs font-bold transition-all" @click="currentTab = 'code'">HTML
+                  Source</button>
+              </div>
+
             </div>
           </div>
         </div>
@@ -189,7 +251,7 @@ function handleDownloadCode() {
                 <div class="flex items-center gap-2 text-xs font-semibold font-sans">
                   <FileCode class="w-4 h-4 text-primary" />
                   <span>{{ user.initials + '_' + portfolio.title.toLowerCase().replace(/\s+/g, '_')
-                  }}_portfolio.html</span>
+                    }}_portfolio.html</span>
                 </div>
                 <button
                   class="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white px-3 py-1.5 bg-slate-850 hover:bg-slate-800 rounded-lg transition-all font-sans font-bold"

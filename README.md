@@ -1,58 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📝 ResumeCanvas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Transform a resume into a beautiful, interactive portfolio website using AI.
 
-## About Laravel
+ResumeCanvas is a Laravel + Vue application that allows users to upload their resumes and automatically generate a modern single-page portfolio website. The generated portfolio can be previewed, edited, downloaded, and managed directly from a personalized dashboard.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# 🌟 Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Authentication
+- User registration and login
+- Secure session-based authentication
+- Personalized dashboard
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### AI Portfolio Generation
+- Upload resumes in PDF format
+- AI powered automatic generation of complete portfolio websites
+- Generation of interactive, SPA-style portfolios with customized design (Uses TailwindCSS + Alpine.js)
 
-## Learning Laravel
+### Portfolio Management
+- Create portfolios from resumes
+- Preview generated websites in-browser
+- Responsive viewport simulation
+- View generated HTML source
+- Ability to share the generated Portfolio
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### User Experience
+- Beautiful glassmorphic UI
+- Responsive design
+- Real-time validation feedback
+- Toast notifications
+- Mobile-friendly navigation
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# ⚙️ Tech Stack Used
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+This project uses the ***PLIV*** stack:
+- **Backend**: Laravel + PostgreSQL
+- **Frontend**: Vue.js + TailwindCSS
+- Integration via **Inertia.js**
+- **AI**: Google Gemini (via Laravel AI SDK)
 
-## Agentic Development
+# 🚀 Installation
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+This project requires:
+- PHP (>= 8.4) and Composer
+- Node and npm
+
+1. Start by cloning the repo.
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+$ git clone https://github.com/harishtpj/ResumeCanvas.git
+$ cd ResumeCanvas
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+2. Install the dependencies and setup DB
 
-## Contributing
+```bash
+$ composer run setup
+```
+*NOTE* that the local development server uses SQLite as database. If you wanted to change that, you can 
+configure it at `.env` file.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Also make sure that you set the `GEMINI_API_KEY` in the `.env` file accordingly.
 
-## Code of Conduct
+3. Start the server by running
+```bash
+$ composer run dev
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 🌐 Online Demo
 
-## Security Vulnerabilities
+This project has been deployed on Render and is publicly available for usage at:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+https://resumecanvas-9sjc.onrender.com/
 
-## License
+You can use the following demo credentials to login and test the application:
+- Email: `demo@eg.co`
+- Password: `p@ssw0rd`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+> [!NOTE]  
+> Due to limitations of Render (for free account), the filesystem is ephemeral. The 'Regenerate Portfolio'
+> functionality requires stored resume files in the filesystem. Hence, that feature may fail if invoked
+> after a long period of time. All other functionality works as normal.
+
+# 📝 License
+
+#### Copyright © 2026 [M.V.Harish Kumar](https://github.com/harishtpj). <br>
+#### This project is [MIT](https://github.com/harishtpj/ResumeCanvas/blob/master/LICENSE) licensed.

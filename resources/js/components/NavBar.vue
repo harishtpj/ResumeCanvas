@@ -1,5 +1,6 @@
 <script setup>
 import { dashboard, index, login, logout, register } from '@/routes/index';
+import portfolio from '@/routes/portfolio/index';
 import { ref, computed } from 'vue';
 import { FileBadge, LogOut, Menu, X } from '@lucide/vue';
 import { Link, usePage } from '@inertiajs/vue3';
@@ -74,6 +75,10 @@ const mobileMenuOpen = ref(false);
                 <Link v-if="isLoggedIn" :href="dashboard()" as="span"
                     class="text-on-surface font-sans text-xl py-3 border-b border-slate-100 cursor-pointer">
                     Dashboard
+                </Link>
+                <Link v-if="isLoggedIn" :href="portfolio.index()" as="span"
+                    class="text-on-surface font-sans text-xl py-3 border-b border-slate-100 cursor-pointer">
+                    My Portfolios
                 </Link>
             </div>
             <hr class="border-slate-100" />

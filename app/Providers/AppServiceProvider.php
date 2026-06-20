@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Models\Portfolio;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\Access\Response;
 use Inertia\ExceptionResponse;
 use Inertia\Inertia;
 
@@ -23,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(UrlGenerator $url): void
     {
+        Gate::define('is-shared', function (?User $user, Portfolio $portfolio) {
+            return $portfolio->shared ? Response::allow() : Response::denyAsNotFound();
+        });
+
         if (App::environment('production')) {
             $url->forceHttps();
             Inertia::handleExceptionsUsing(function (ExceptionResponse $resp) {

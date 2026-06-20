@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('resume_path');
             $table->longText('content');
+            $table->boolean('shared')->default(false);
             $table->timestamps();
         });
     }

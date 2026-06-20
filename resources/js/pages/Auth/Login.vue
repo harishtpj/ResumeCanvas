@@ -11,7 +11,7 @@ import { Head } from '@inertiajs/vue3';
                 class="hidden lg:block lg:col-span-6 relative rounded-3xl overflow-hidden shadow-xl border border-white/20 select-none">
                 <img alt="Pristine Workspace Illustration" class="w-full h-auto object-cover transform scale-105"
                     referrerpolicy="no-referrer"
-                    src="@/../images/login_hero.jpeg" />
+                    src="@/../images/login_hero.png" />
                 <div class="absolute inset-0 bg-gradient-to-tr from-primary/15 via-transparent to-transparent"></div>
             </div>
 

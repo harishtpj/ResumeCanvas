@@ -1,14 +1,23 @@
 <script setup>
-import {Trash2, RefreshCw} from '@lucide/vue';
+import {Trash2, RefreshCw, Share} from '@lucide/vue';
 import portfolio from "@/routes/portfolio/index.ts";
-import {Link} from "@inertiajs/vue3";
+import {Link, router} from "@inertiajs/vue3";
+import {view} from "@/routes/index";
 
-defineProps({
+const props = defineProps({
     item: {
         type: Object,
         required: true
     }
 });
+
+function copyShareLink() {
+    navigator.clipboard.writeText(window.location.origin + view(props.item.id).url);
+    router.flash('toast', {
+        type: 'success',
+        text: 'Public share link copied to clipboard!'
+    });
+}
 </script>
 
 <template>
@@ -28,6 +37,12 @@ defineProps({
                     >
                         <RefreshCw class="w-4 h-4"/>
                     </Link>
+                    <button v-if="item.shared" @click.stop="copyShareLink"
+                          class="p-1.5 hover:bg-slate-100 text-on-surface-variant hover:text-primary rounded-lg transition-colors cursor-pointer"
+                          title="Share Portfolio"
+                    >
+                        <Share class="w-4 h-4"/>
+                    </button>
                     <Link :href="portfolio.destroy(item.id)" as="button"
                           class="p-1.5 hover:bg-red-50 text-on-surface-variant hover:text-red-600 rounded-lg transition-colors cursor-pointer"
                           title="Delete"

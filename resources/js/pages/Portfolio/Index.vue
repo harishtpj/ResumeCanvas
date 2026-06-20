@@ -1,9 +1,10 @@
 <script setup>
 import { computed, ref } from 'vue';
-import { ArrowLeft } from '@lucide/vue';
+import { ArrowLeft, FolderPlus } from '@lucide/vue';
 import { Head, InfiniteScroll, Link } from "@inertiajs/vue3";
 import { dashboard } from "@/routes/index";
 import PortfolioCard from "@/components/PortfolioCard.vue";
+import portfolio from "@/routes/portfolio/index";
 
 defineProps({
   portfolios: {
@@ -14,6 +15,7 @@ defineProps({
 </script>
 
 <template>
+
   <Head title="Portfolios" />
   <section class="pb-20 w-full min-h-screen">
     <div class="max-w-[1280px] mx-auto px-4 md:px-8 flex flex-col gap-6">
@@ -33,8 +35,21 @@ defineProps({
       </div>
 
       <InfiniteScroll data="portfolios">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <PortfolioCard v-for="portfolio in portfolios.data" :key="portfolio.id" :item="portfolio" />
+        <div v-if="portfolios.data && portfolios.total > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <PortfolioCard v-for="item in portfolios.data" :key="item.id" :item="item" />
+        </div>
+
+        <div v-else class="flex flex-col items-center justify-center py-24 text-center">
+          <div class="bg-slate-100 p-4 rounded-full mb-6">
+            <FolderPlus class="w-10 h-10 text-slate-400" />
+          </div>
+          <h3 class="text-xl font-bold text-on-surface">No portfolios yet</h3>
+          <p class="text-slate-500 mt-2 max-w-sm">
+            It looks like you haven't created any portfolios. Click below to get started.
+          </p>
+          <Link :href="portfolio.create()" class="mt-8 px-6 py-2 bg-primary text-white rounded-lg hover:opacity-90 transition">
+            Create New Portfolio
+          </Link>
         </div>
       </InfiniteScroll>
 
